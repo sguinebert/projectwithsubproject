@@ -2,6 +2,7 @@ TEMPLATE = subdirs  # This changes to the subdirs function.  You can't combine
                     # compiling code and the subdirs function in the same .pro
                     # file.
 
+CONFIG += c++latest
 # By default, you assign a directory to the SUBDIRS variable, and qmake looks
 # inside that directory for a <dirname>.pro file.
 #$$(INCLUDE_WEBASSEMBLY):SUBDIRS += webassembly
@@ -10,6 +11,8 @@ contains(QMAKE_CXX, em\+\+)|contains(QMAKE_LINK, em\+\+): {
     message("Compiling with WebAssembly kit")
     SUBDIRS += webassembly
 }
+
+
 
 ## Define the target for the subproject
 #webassembly.target = webassembly

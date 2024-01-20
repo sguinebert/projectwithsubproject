@@ -3,8 +3,6 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 webassembly.target = webassembly
-#webassembly.commands = cmd /c echo This is a test > C:\\Users\\gsylv\\OneDrive\\Documents\\build-project-Desktop_Qt_6_6_0_MinGW_64_bit-Debug\\webassembly\\debug\\test.txt
-#webassembly.commands = cd C:\Users\gsylv\source\repos\build-project-Desktop_Qt_6_6_0_MinGW_64_bit-Debug\webassembly\ && C:/Qt/6.6.0/wasm_singlethread/bin/qmake.bat -o Makefile $$PWD/webassembly/webassembly.pro -qtconf C:/Qt/6.6.0/wasm_singlethread/bin/target_qt.conf -spec wasm-emscripten && C:\Users\gsylv\emsdk\upstream\emscripten\emmake make -f Makefile
 webassembly.commands = \
     set PATH=C:\Users\gsylv\emsdk\upstream\emscripten;%PATH% && \
     cd $$OUT_PWD\webassembly\ && \
@@ -22,3 +20,8 @@ PRE_TARGETDEPS += webassembly
 
 # This renames the resulting executable
 TARGET = project
+
+#all dependencies
+unix|win32: LIBS += -L$$PWD/../../../../../../msys64/mingw64/lib/ -lncurses
+INCLUDEPATH += $$PWD/../../../../../../msys64/mingw64/include
+DEPENDPATH += $$PWD/../../../../../../msys64/mingw64/include

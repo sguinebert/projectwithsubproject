@@ -1,3 +1,4 @@
 TEMPLATE = app
 
-#QT += core gui
+QT += core gui qml
+QT += quick

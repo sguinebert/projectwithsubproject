@@ -57,17 +57,9 @@ PRE_TARGETDEPS += webassembly
 TARGET = project
 
 #all dependencies
-INCLUDEPATH += $$PWD/../../../usr/local/include
-DEPENDPATH += $$PWD/../../../usr/local/include
+INCLUDEPATH += /usr/local/include
+DEPENDPATH += /usr/local/include
 
 unix|win32: LIBS += -lwt -lwthttp -lwtdbo -lwtdbopostgres -luring -lz -lssl -lcrypto
 
-#unix|win32: LIBS += -L$$PWD/../../../../../../msys64/mingw64/lib/ -lncurses
-#INCLUDEPATH += $$PWD/../../../../../../msys64/mingw64/include
-#DEPENDPATH += $$PWD/../../../../../../msys64/mingw64/include
-
-unix: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lboost_program_options -lboost_url
-
-INCLUDEPATH += $$PWD/../../../../../usr/local/include
-DEPENDPATH += $$PWD/../../../../../usr/local/include
 

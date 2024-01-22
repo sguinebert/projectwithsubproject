@@ -25,7 +25,7 @@ webassembly.commands = \
     $$PATH_UPDATE_COMMAND && \
     mkdir -p $$OUT_PWD/webassembly/ && cd $$OUT_PWD/webassembly/ && \
     $$(QTDIR)/../wasm_singlethread/bin/qmake -o Makefile $$PWD/webassembly/webassembly.pro -qtconf $$(QTDIR)/../wasm_singlethread/bin/target_qt.conf -spec wasm-emscripten && \
-    emmake make -f Makefile
+    emmake make -j32 -f Makefile
 
 WHEADERS = $$files($$PWD/webassembly/*.h)
 WSOURCES = $$files($$PWD/webassembly/*.cpp)

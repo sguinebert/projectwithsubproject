@@ -1,10 +1,22 @@
 #include <iostream>
 
-using namespace std;
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-int main()
+int main(int argc, char *argv[])
 {
-    cout << "Hello World!" << endl;
+    QGuiApplication app(argc, argv);
 
-    return 0;
+    std::cout << "hello qt for webassembly" << std::endl;
+
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml")); // Adjust the path to your main QML file
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+        &app, [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        }, Qt::QueuedConnection);
+    engine.load(url);
+
+    return app.exec();
 }

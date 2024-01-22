@@ -2,19 +2,6 @@ TEMPLATE = app
 
 CONFIG += c++latest
 DEFINES += BOOST_ASIO_HAS_IO_URING  BOOST_ASIO_HAS_FILE
-#QT_INSTALL_PATH = $$[QT_INSTALL_PREFIX]
-#message(Qt install path: $$QT_INSTALL_PATH)
-
-
-## Find the emmake tool
-#EMMAKE_PATH = $$system(which emmake)
-## Check if emmake was found
-#isEmpty(EMMAKE_PATH) {
-#    message("emmake not found. Please ensure Emscripten is installed and in your PATH. $$EMMAKE_PATH")
-#    EMMAKE_PATH = /home/guinebert/emsdk/upstream/emscripten
-#} else {
-#    message("emmake found at: $$EMMAKE_PATH")
-#}
 
 SOURCES += main.cpp
 

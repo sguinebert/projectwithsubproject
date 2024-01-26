@@ -10,7 +10,7 @@ EMMAKE_PATH = $$system(which emmake)
 isEmpty(EMMAKE_PATH) {
     EMMAKE_PATH = /home/guinebert/emsdk/upstream/emscripten
     EM_PATH_INCLUDE = $${EMMAKE_PATH}/cache/sysroot/include
-    system(echo "EM_PATH_INCLUDE = $$EM_PATH_INCLUDE" > share.pri)
+    system(echo "EM_PATH_INCLUDE = $$EM_PATH_INCLUDE" > export.pri)
     message("emmake not found. emmake not found. Please ensure Emscripten is installed and in your PATH. Defaulting : $$EMMAKE_PATH, $${EM_PATH_INCLUDE}")
 
 } else {

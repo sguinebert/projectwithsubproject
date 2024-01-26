@@ -9,6 +9,9 @@
 using namespace std;
 using namespace Wt;
 
+WLength perc100(100, LengthUnit::Percentage);
+
+
 awaitable<void> message(std::string_view message)
 {
     std::cout << "message from client " << std::endl;
@@ -22,12 +25,14 @@ awaitable<std::unique_ptr<Wt::WApplication>> createApplication(const WEnvironmen
     auto executor = co_await asio::this_coro::executor;
 
     auto app = std::make_unique<WApplication>(env);
+    app->setHtmlClass("html body");
+    app->setBodyClass("body");
+
     auto root = app->root();
+    root->resize(perc100, perc100);
     //app->enableUpdates();
 
     app->instance()->setTitle("Testing Page");
-
-    root->addWidget(std::make_unique<WText>("HELLO WORLD"));
 
     auto wasm = root->addWidget(std::make_unique<WWebassembly>("webassembly", "./webassembly/webassembly", "app/webassembly"));
     wasm->decorationStyle().setBackgroundColor(WColor(StandardColor::Cyan));
@@ -50,18 +55,7 @@ awaitable<std::unique_ptr<Wt::WApplication>> createApplication(const WEnvironmen
 
     wasm->doJavaScript(R"""(
             var screenElement = document.getElementById("screen");
-            console.log('Hello bridge', screenElement, window.webassembly.status);
             Wt.emit(screenElement, 'message', 'bar');
-// window.webassembly.module.onRuntimeInitialized = function() {
-// console.log('initialized');
-//     // Now it's safe to use Module.JsBridge
-//     let instance = new window.webassembly.module.JsBridge();
-// };
-//             if(window.webassembly.status==='running'){
-//                 var jc = new window.webassembly.module().JsBridge();
-//                 jc.myMethod();
-//             }
-
     )""");
 
     co_return app;

@@ -12,8 +12,6 @@ contains(QMAKE_CXX, em\+\+)|contains(QMAKE_LINK, em\+\+): {
     SUBDIRS += webassembly
 }
 
-
-
 ## Define the target for the subproject
 #webassembly.target = webassembly
 #webassembly.commands = cmd /c echo This is a test > C:\\Users\\gsylv\\OneDrive\\Documents\\build-project-Desktop_Qt_6_6_0_MinGW_64_bit-Debug\\webassembly\\debug\\test.txt

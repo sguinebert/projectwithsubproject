@@ -4,14 +4,22 @@
 #include <Wt/WConfig.h>
 #include <Wt/WWebassembly.h>
 #include <Wt/WText.h>
+//#include <Wt/lsquic.
 
 using namespace std;
 using namespace Wt;
+
+awaitable<void> message(std::string_view message)
+{
+    std::cout << "message from client " << std::endl;
+    co_return;
+}
 
 
 awaitable<std::unique_ptr<Wt::WApplication>> createApplication(const WEnvironment& env)
 {
     std::cerr << "createApplication" << std::endl;
+    auto executor = co_await asio::this_coro::executor;
 
     auto app = std::make_unique<WApplication>(env);
     auto root = app->root();
@@ -24,6 +32,38 @@ awaitable<std::unique_ptr<Wt::WApplication>> createApplication(const WEnvironmen
     auto wasm = root->addWidget(std::make_unique<WWebassembly>("webassembly", "./webassembly/webassembly", "app/webassembly"));
     wasm->decorationStyle().setBackgroundColor(WColor(StandardColor::Cyan));
     wasm->resize(800, 600);
+
+    //std::cerr << "--------> " << wasm << std::endl;
+
+    wasm->link().connect([wasm] (auto view){
+        //std::cerr << "--------> copy " << wasm << std::endl;
+
+        std::cout << "------------------------------------message from client " << view << std::endl;
+        wasm->test();
+
+    });
+
+    // asio::post(executor, [wasm]() {
+    //     std::cerr << "--------> post copy " << wasm << std::endl;
+
+    // });
+
+    wasm->doJavaScript(R"""(
+            var screenElement = document.getElementById("screen");
+            console.log('Hello bridge', screenElement, window.webassembly.status);
+            Wt.emit(screenElement, 'message', 'bar');
+// window.webassembly.module.onRuntimeInitialized = function() {
+// console.log('initialized');
+//     // Now it's safe to use Module.JsBridge
+//     let instance = new window.webassembly.module.JsBridge();
+// };
+//             if(window.webassembly.status==='running'){
+//                 var jc = new window.webassembly.module().JsBridge();
+//                 jc.myMethod();
+//             }
+
+    )""");
+
     co_return app;
 }
 

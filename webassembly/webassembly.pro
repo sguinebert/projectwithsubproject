@@ -1,8 +1,15 @@
 ! include( ../common.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
+! include( ../export.pri ) {
+    error( "Couldn't find the export.pri file!" )
+}
 
-SOURCES += main.cpp
+#message("EM_PATH_INCLUDE is: $$EM_PATH_INCLUDE")
+
+
+SOURCES += main.cpp \
+    JsBridge.cpp
 
 resources.files = main.qml
 resources.prefix = /$${TARGET}
@@ -20,3 +27,8 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    JsBridge.h
+
+INCLUDEPATH += $${EM_PATH_INCLUDE}
